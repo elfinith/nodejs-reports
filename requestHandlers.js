@@ -1,8 +1,4 @@
-
-var fs = require("fs"),
-	formidable = require("formidable"),
-	fb = require("node-firebird");	
-
+var fb = require("node-firebird");	
 	
 String.prototype.format = function()
 {
@@ -86,7 +82,7 @@ function ConvertJsonToTable(parsedJson, tableId, tableClassName, linkText)
                 
                 for (i = 0; i < parsedJson.length; i++)
                 {
-					// ѕор€дковый номер в строке
+					// Порядковый номер в строке
 					tbCon += tdRow.format((i + 1).toString());
 					
                     for (j = 0; j < headers.length; j++)
@@ -151,18 +147,42 @@ function array_keys(input, search_value, argStrict)
     return tmp_arr;
 }
 
-
 function start(response) {
+
   console.log("Request handler 'start' was called.");
-  //  ћенюшка
+  
+  var current_date = new Date();      
+  
+  var months = new Array(
+	'\u042F\u043D\u0432\u0430\u0440\u044C', 				// Январь
+	'\u0444\u0435\u0432\u0440\u0430\u043B\u044C', 			// Февраль
+	'\u041C\u0430\u0440\u0442', 							// Март
+	'\u0430\u043F\u0440\u0435\u043B\u044C', 				// Апрель
+	'\u043C\u0430\u0439', 									// Май
+	'\u0438\u044E\u043D\u044C', 							// Июнь
+	'\u0438\u044E\u043B\u044C', 							// Июль
+	'\u0430\u0432\u0433\u0443\u0441\u0442', 				// Август
+	'\u0441\u0435\u043D\u0442\u00A4\u0431\u0440\u044C', 	// Сентябрь
+	'\u043E\u043A\u0442\u00A4\u0431\u0440\u044C', 			// Октябрь
+	'\u043D\u043E\u00A4\u0431\u0440\u044C', 				// Ноябрь
+	'\u0434\u0435\u043A\u0430\u0431\u0440\u044C');			// Декабрь
+	
+  var month_value = current_date.getMonth() - 1;
+  if (month_value < 0) {
+	month_value = 0;
+  }
+  
+  //  Менюшка
   var body = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head><body></body></html>';
-	body += '<ul id="navi">' 
+  body += '<ul id="navi">' 
 		+ '<li id="mainpage"><a href="../report"> <font size="4" color=black face="Tahoma">\u0421\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u0438 \u043D\u0430 \u0442\u0435\u0440\u0440\u0438\u0442\u043E\u0440\u0438\u0438 \u043F\u0440\u0435\u0434\u043F\u0440\u0438\u044F\u0442\u0438\u044F</font></a></li>'
-		+ '<li><a href="../http-last-month"><font size="4" color=black face="Tahoma">HTTP-\u0422\u0440\u0430\u0444\u0438\u043A \u0437\u0430 \u043F\u0440\u0435\u0434\u044B\u0434\u0443\u0449\u0438\u0439 \u043C\u0435\u0441\u044F\u0446</font></a></li>'
+		+ '<li><a href="../http-last-month"><font size="4" color=black face="Tahoma">HTTP-\u0422\u0440\u0430\u0444\u0438\u043A \u0437\u0430 \u043F\u0440\u0435\u0434\u044B\u0434\u0443\u0449\u0438\u0439 \u043C\u0435\u0441\u044F\u0446 (' 
+			+ months[month_value] + ')</font></a></li>'
+		+ '<li><a href="http://192.168.0.245/stats/data-from-csv.htm"><font size="4" color=black face="Tahoma">\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043A\u0430 WAN- \u0438 Exchange-\u0441\u043E\u0435\u0434\u0438\u043D\u0435\u043D\u0438\u0439 </font></a></li>'			
 		+ '</ul>';
-	response.writeHead(200, {"Content-Type": "text/html"});
-	response.write(body);
-	response.end();
+  response.writeHead(200, {"Content-Type": "text/html"});
+  response.write(body);
+  response.end();
 }
 
 function report(response) {
@@ -198,7 +218,7 @@ function http_last_month(response) {
   options.database='d:\\ibases\\tetradka\\dbase.fdb';
   options.user='SYSDBA';
   options.password='masterkey';
-  // извлекаем дату в виде "мес€ц.год"
+  // извлекаем дату в виде "месяц.год"
   var today = new Date();
   today.setMonth(today.getMonth() - 1);
   var mm = today.getMonth() + 1; //January is 0!
