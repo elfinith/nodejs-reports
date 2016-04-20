@@ -1,0 +1,4 @@
+#!/bin/bash
+# ps -e -o pid,args | grep node | grep -v grep | cut -d ' ' -f1
+killall node
+nohup node /home/cache/nodejs/index.js &
