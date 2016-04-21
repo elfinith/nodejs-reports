@@ -1,4 +1,5 @@
-var fb = require("node-firebird");	
+var fb = require("node-firebird"),
+	mysql = require("mysql");
 	
 String.prototype.format = function()
 {
@@ -179,6 +180,7 @@ function start(response) {
 		+ '<li><a href="../http-last-month"><font size="4" color=black face="Tahoma">HTTP-\u0422\u0440\u0430\u0444\u0438\u043A \u0437\u0430 \u043F\u0440\u0435\u0434\u044B\u0434\u0443\u0449\u0438\u0439 \u043C\u0435\u0441\u044F\u0446 (' 
 			+ months[month_value] + ')</font></a></li>'
 		+ '<li><a href="http://192.168.0.245/stats/data-from-csv.htm"><font size="4" color=black face="Tahoma">\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043A\u0430 WAN- \u0438 Exchange-\u0441\u043E\u0435\u0434\u0438\u043D\u0435\u043D\u0438\u0439 </font></a></li>'			
+		+ '<li><a href="../modems"><font size="4" color=black face="Tahoma">\u0421\u043F\u0438\u0441\u043E\u043A \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u044B\u0445 \u043C\u043E\u0434\u0435\u043C\u043E\u0432</font></a></li>'					
 		+ '</ul>';
   response.writeHead(200, {"Content-Type": "text/html"});
   response.write(body);
@@ -247,6 +249,35 @@ function http_last_month(response) {
   }); 	   
 }
 
+function modems(response) {
+	console.log("Request handler 'modems' was called.");
+
+	var connection = mysql.createConnection({
+		host     : '192.168.0.245',
+		user     : 'root',
+		database : 'ocsweb'		
+	});	
+ 	connection.connect(); 
+	connection.query('SELECT user as "\u041B\u043E\u0433\u0438\u043D", '
+		+ 'host as "\u0418\u043C\u044F \u0445\u043E\u0441\u0442\u0430", '
+		+ 'modem as "\u041C\u043E\u0434\u0435\u043C" from ListModems;', function(err, rows, fields) {
+		if (err) throw err;
+		
+		var body = '<html>'+
+			'<head>'+
+			'<meta http-equiv="Content-Type" '+
+			'content="text/html; charset=UTF-8" />'+
+			'<link rel="stylesheet" href="style.css" type="text/css" />' 	
+			'</head>';	
+		response.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});		 
+		response.write(body);		  
+		response.write(ConvertJsonToTable(rows, 'jsonTable', 'gray', 'Download'));
+		response.end();		 
+     });
+	connection.end();	 	
+}
+
 exports.start = start;
 exports.report = report;
 exports.http_last_month = http_last_month;
+exports.modems = modems;
