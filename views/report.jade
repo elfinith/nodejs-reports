@@ -1,0 +1,23 @@
+﻿mixin row(index,items)
+  tr
+    td= index + 1
+    each item, index in items
+      td= item 
+
+mixin table(tableData)
+  table
+    thead
+      tr
+        th №
+        each val, index in tableData[1]
+          th= index
+    each row, index in tableData
+      +row(index,row)		  
+
+doctype html
+html
+  head
+    title!= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
++table(data)
+  
