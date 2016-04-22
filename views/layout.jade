@@ -3,5 +3,31 @@ html
   head
     title!= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+    script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js')
+    mixin bootswatch(theme)
+      link(href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/" + theme + "/bootstrap.min.css", rel="stylesheet")﻿    
+    +bootswatch("united")
+    //link(href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/flatly/bootstrap.min.css", rel="stylesheet")
+    //link(href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/flatly/bootstrap-theme.min.css", rel="stylesheet")    
+  body(style="padding-left:100;")
+    block pageTitle
+    block navBar
+      nav(class='navbar navbar-default', role='navigation')
+        .container-fluid
+           .navbar-header
+              button(class='navbar-toggle', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+                span.sronly
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+              a(class='navbar-brand', href='/#') Отчёты
+            #bs-example-navbar-collapse-1(class='collapse navbar-collapse')
+              ul(class='nav navbar-nav')
+                li
+                  a(href='/employee') Сотрудники на предприятии
+                li
+                  a(href='/httplastmonth') HTTP-трафик за прошлый месяц
+                li
+                  a(href='/modems') Установленные модемы        
+    block pageContent
