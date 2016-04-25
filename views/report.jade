@@ -1,17 +1,17 @@
 mixin row(index,items)
-  tr
-    td= index + 1
+  tr(style="border-top-style: solid; border-top-width: 1px; border-left-style: solid; border-left-width: 1px; border-right-style: solid; border-right-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;")
+    td(style="text-align:right")= index + 1
     each item, index in items
-      td= item 
+      td(style="padding-left:10px")= item 
 
 mixin table(tableData)
   .panel.panel-default
     table    
       thead
         tr
-          th №  
+          th(style="padding-left:10px") №  
           each val, index in tableData[1]
-            th= index     
+            th(style="padding-left:10px")= index     
         each row, index in tableData
           +row(index,row)		  
 
