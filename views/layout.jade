@@ -8,8 +8,6 @@ html
     mixin bootswatch(theme)
       link(href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/" + theme + "/bootstrap.min.css", rel="stylesheet")﻿    
     +bootswatch("yeti")
-    //link(href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/flatly/bootstrap.min.css", rel="stylesheet")
-    //link(href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/flatly/bootstrap-theme.min.css", rel="stylesheet")    
   body
     block pageTitle
     block navBar
@@ -29,5 +27,7 @@ html
                 li
                   a(href='/httplastmonth') HTTP-трафик за прошлый месяц
                 li
-                  a(href='/modems') Установленные модемы        
+                  a(href='/modems') Установленные модемы
+                li
+                  a(href='/nightly') Ночные                                  
     block pageContent

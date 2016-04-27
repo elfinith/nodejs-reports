@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var modems = require('./routes/modems');
 var employee = require('./routes/employee');
 var httplastmonth = require('./routes/httplastmonth');
+var nightly = require('./routes/nightly');
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use('/users', users);
 app.use('/modems', modems);
 app.use('/employee', employee);
 app.use('/httplastmonth', httplastmonth);
+app.use('/nightly', nightly);
 
 
 // catch 404 and forward to error handler
