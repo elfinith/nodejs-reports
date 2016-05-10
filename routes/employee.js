@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 
 	fb.attach(options, function(err,db) {
 		if (err) throw err;  
-			db.query('select full_name as "ФИО", full_dep as "Подразделение", rang as "Должность" from today_in_territory', 
+			db.query('select full_name as "ФИО", tabel as "Таб.номер", full_dep as "Подразделение", rang as "Должность" from today_in_territory_tabel', 
 		function(err,result) { 			
 			res.render('report', { title: 'Cотрудники на территории', data: result });  						
 			db.detach();    		 

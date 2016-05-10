@@ -5,10 +5,13 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var json2xls = require('json2xls');
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var modems = require('./routes/modems');
 var employee = require('./routes/employee');
+var employeeXLS = require('./routes/employee-xls');
 var httplastmonth = require('./routes/httplastmonth');
 var nightly = require('./routes/nightly');
 
@@ -26,13 +29,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(json2xls.middleware);
+
 app.use('/', routes);
 app.use('/users', users);
 app.use('/modems', modems);
 app.use('/employee', employee);
+app.use('/employee-xls', employeeXLS);
 app.use('/httplastmonth', httplastmonth);
 app.use('/nightly', nightly);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
